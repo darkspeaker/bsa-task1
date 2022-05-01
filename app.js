@@ -1,5 +1,6 @@
 const findBtn = document.querySelector('.btn-find-сharacters');
 const сharacterContainer = document.querySelector('.сharacter-container');
+const сharacterNameInput = document.querySelector('.сharacter-input');
 
 const createCharacterNode = ({ fullName, title, imageUrl }) => {
   const container = document.createElement('div');
@@ -29,7 +30,6 @@ const createCharacterNode = ({ fullName, title, imageUrl }) => {
 const forwardRenderCharactersByFilter = async () => {
   сharacterContainer.replaceChildren();
   const сharacterNodes = [];
-  const сharacterNameInput = document.querySelector('.сharacter-input');
   const сharacters = await getCharacters(сharacterNameInput.value);
   for (const { fullName, imageUrl, title } of сharacters) {
     сharacterNodes.push(createCharacterNode({ fullName, imageUrl, title }));
@@ -40,9 +40,27 @@ const forwardRenderCharactersByFilter = async () => {
 findBtn.addEventListener('click', forwardRenderCharactersByFilter);
 
 const getCharacters  = (сharacterNameInput = '') => {
-  // todo: implement this method
-  // endpoint - `https://my-got-api.herokuapp.com/${сharacterNameInput}`;
   return fetch(`https://my-got-api.herokuapp.com/${сharacterNameInput}`)
     .then(response => response.json())
     .catch(error => console.error(error));
 }
+
+const renderAllHerous = async () =>{
+  сharacterContainer.replaceChildren();
+  const сharacterNodes = [];
+  const сharacters = await getCharacters();
+  for (const { fullName, imageUrl, title } of сharacters) {
+    сharacterNodes.push(createCharacterNode({ fullName, imageUrl, title }));
+  }
+  сharacterContainer.append(...сharacterNodes);
+}
+
+const getAllCharacters  = () => {
+  return fetch(`https://my-got-api.herokuapp.com/`)
+    .then(response => response.json())
+    .catch(error => console.error(error));
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+  renderAllHerous();
+});
