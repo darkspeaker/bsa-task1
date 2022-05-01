@@ -42,5 +42,7 @@ findBtn.addEventListener('click', forwardRenderCharactersByFilter);
 const getCharacters  = (сharacterNameInput = '') => {
   // todo: implement this method
   // endpoint - `https://my-got-api.herokuapp.com/${сharacterNameInput}`;
-  return [];
+  return fetch(`https://my-got-api.herokuapp.com/${сharacterNameInput}`)
+    .then(response => response.json())
+    .catch(error => console.error(error));
 }
