@@ -61,6 +61,13 @@ const getAllCharacters  = () => {
     .catch(error => console.error(error));
 }
 
+сharacterNameInput.addEventListener('keyup', () => {
+  if(!сharacterNameInput.value.length){
+    сharacterContainer.replaceChildren();
+    renderAllHerous();
+  }
+})
+
 window.addEventListener('DOMContentLoaded', () => {
   renderAllHerous();
 });
